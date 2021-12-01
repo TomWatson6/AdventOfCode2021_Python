@@ -1,26 +1,25 @@
-def num_increasing(array):
-    increasing = 0
-    
-    for x in range(1, len(array), 1):
-        if array[x] > array[x - 1]:
-            increasing += 1
+def p1(output):
+    print("Part 1:", output)
 
-    return increasing
+def p2(output):
+    print("Part 2:", output)
 
 f = open("input.txt")
 depths = [int(x.strip("\n")) for x in f.readlines()]
 f.close()
 
-num_increased = num_increasing(depths)
+increasing = 0
 
-print("Part 1:", num_increased)
+for x in range(1, len(depths), 1):
+    if depths[x] > depths[x - 1]:
+        increasing += 1
 
-triplets = []
+p1(increasing)
 
-for x in range(1, len(depths) - 1, 1):
-    sum = depths[x - 1] + depths[x] + depths[x + 1]
-    triplets.append(sum)
+increasing = 0
 
-num_increased = num_increasing(triplets)
+for x in range(3, len(depths), 1):
+    if depths[x] > depths[x - 3]:
+        increasing += 1
 
-print("Part 2:", num_increased)
+p2(increasing)
