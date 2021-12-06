@@ -16,12 +16,7 @@ def evolve(raw_fish, days):
         fish[6] += new_fish
         fish[8] = new_fish
 
-    total = 0
-
-    for num in fish.values():
-        total += num
-
-    return total
+    return sum(fish.values())
 
 def p1(output):
     print("Part 1:", output)
@@ -32,8 +27,7 @@ def p2(output):
 with open("input.txt") as f:
     lines = [x.strip() for x in f.readlines()]
 
-answer = evolve([int(x) for x in lines[0].split(",")], 80)
-p1(answer)
+raw_fish = [int(x) for x in lines[0].split(",")]
 
-answer = evolve([int(x) for x in lines[0].split(",")], 256)
-p2(answer)
+p1(evolve(raw_fish, 80))
+p2(evolve(raw_fish, 256))
