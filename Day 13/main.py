@@ -38,7 +38,7 @@ def print_dots(dots, path):
             if dots.get((x, y)) == True:
                 file.write('#')
             else:
-                file.write('.')
+                file.write(' ')
         file.write("\r\n")
     file.close()
 
