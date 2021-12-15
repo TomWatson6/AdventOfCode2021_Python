@@ -70,6 +70,30 @@ def inflate_grid(grid, size):
             large_grid.append(row)
     return large_grid
 
+def output_directions(path):
+    left = 0
+    right = 0
+    up = 0
+    down = 0
+
+    for x in range(len(path) - 1):
+        before = path[x]
+        after = path[x + 1]
+        if after[1] - before[1] > 0:
+            right += 1
+        elif after[1] - before[1] < 0:
+            left += 1
+
+        if after[0] - before[0] > 0:
+            down += 1
+        elif after[0] - before[0] < 0:
+            up += 1
+
+    print("Left:", left)
+    print("Right:", right)
+    print("Up:", up)
+    print("Down:", down)
+
 def p1(output):
     print("Part 1:", output)
 
@@ -88,11 +112,14 @@ path = find_path(grid, [0, 0], [len(grid) - 1, len(grid[0]) - 1])
 
 p1(path[1] - grid[0][0])
 
+output_directions(path[0])
+
 large_grid = inflate_grid(grid, 5)
 
 path = find_path(large_grid, [0, 0], [len(large_grid) - 1, len(large_grid[0]) - 1])
 
 p2(path[1] - large_grid[0][0])
 
+output_directions(path[0])
 
 
