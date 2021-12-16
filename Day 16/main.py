@@ -32,7 +32,6 @@ def calculate(values, outer_id):
 def decode(binary, outer_id, termination_length):
     version_total = 0
     values = []
-    collection_operator = -1
     num_to_collect = termination_length 
     packets_remaining = termination_length 
 
