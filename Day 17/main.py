@@ -1,4 +1,5 @@
 
+import time
 from collections import defaultdict
 
 def calculate(number):
@@ -34,6 +35,8 @@ def p1(output):
 def p2(output):
     print("Part 2:", output)
 
+start_time = time.time()
+
 with open("input.txt") as f:
     line = f.read().strip()
 
@@ -58,6 +61,9 @@ y_start = abs(target_y[0]) - 1
 y_max = calculate(y_start)
 
 p1(y_max)
+
+print("Part 1 took:", round(time.time() - start_time, 2), "seconds")
+start_time = time.time()
 
 x_times = defaultdict(set)
 y_times = defaultdict(set)
@@ -92,5 +98,6 @@ points = list(points)
 points = sorted(points, key=lambda x: x[0])
 
 p2(hits)
-    
+ 
+print("Part 2 took:", round(time.time() - start_time, 2), "seconds")
 
