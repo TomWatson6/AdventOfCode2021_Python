@@ -149,7 +149,7 @@ class ScannerTree:
                 rel_pos[get_pos(b1, b2)] += 1
 
         for k, v in rel_pos.items():
-            if v >= 11:
+            if v >= 12:
                 return k
 
 def p1(output):
