@@ -31,40 +31,26 @@ def play_game(player1, player2):
         player1_move = not player1_move
     return (p1_score, p2_score, rolls)
 
-def play_game2(player1, player2, p1_score, p2_score, p1_turn, memo):
-    end_state = lambda p1, p2: p1 >= 21 or p2 >= 21
+def play_game2(p1, p2, s1, s2, memo):
+    end_state = lambda s1, s2: s1 >= 21 or s2 >= 21
     total = (0, 0)
 
-    if end_state(p1_score, p2_score):
-        return (1, 0) if p1_score > p2_score else (0, 1)
-    elif memo.get((player1, player2, p1_score, p2_score, p1_turn)) is not None:
-        return memo[(player1, player2, p1_score, p2_score, p1_turn)]
+    if end_state(s1, s2):
+        return (1, 0) if s1 > s2 else (0, 1)
+    elif (p1, p2, s1, s2) in memo:
+        return memo[(p1, p2, s1, s2)]
     else:
         for m1 in range(1, 4):
             for m2 in range(1, 4):
                 for m3 in range(1, 4):
-                    wins = (0, 0)
-
-                    if p1_turn:
-                        p1_copy = int(player1)
-                        p1_score_copy = int(p1_score)
-                        p1_copy = advance(p1_copy, m1)
-                        p1_copy = advance(p1_copy, m2)
-                        p1_copy = advance(p1_copy, m3)
-                        p1_score_copy += p1_copy
-                        wins = play_game2(p1_copy, player2, p1_score_copy, p2_score, not p1_turn, memo)
-                        memo[(p1_copy, player2, p1_score_copy, p2_score, not p1_turn)] = wins
-                    else:
-                        p2_copy = int(player2)
-                        p2_score_copy = int(p2_score)
-                        p2_copy = advance(p2_copy, m1)
-                        p2_copy = advance(p2_copy, m2)
-                        p2_copy = advance(p2_copy, m3)
-                        p2_score_copy += p2_copy
-                        wins = play_game2(player1, p2_copy, p1_score, p2_score_copy, not p1_turn, memo)
-                        memo[(player1, p2_copy, p1_score, p2_score_copy, not p1_turn)] = wins
-
-                    total = (total[0] + wins[0], total[1] + wins[1])
+                    p1_ = int(p1)
+                    s1_ = int(s1)
+                    for m in [m1, m2, m3]:
+                        p1_ = advance(p1_, m)
+                    s1_ += p1_
+                    w1, w2 = play_game2(p2, p1_, s2, s1_, memo)
+                    memo[(p2, p1_, s2, s1_)] = (w1, w2)
+                    total = (total[0] + w2, total[1] + w1)
     return total
 
 def p1(output):
@@ -90,6 +76,6 @@ memo = dict()
 player1 = int(lines[0][-1])
 player2 = int(lines[1][-1])
 
-u1, u2 = play_game2(player1, player2, 0, 0, True, memo)
+u1, u2 = play_game2(player1, player2, 0, 0, memo)
 
 p2(max(u1, u2))
