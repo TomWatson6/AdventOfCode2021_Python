@@ -65,7 +65,8 @@ for i in range(len(Z)):
 
 grid = dict()
 
-for cube in cubes:
+for x, cube in enumerate(cubes):
+    print("Starting instruction:", x)
     x0 = XI[cube.x_low]
     x1 = XI[cube.x_high]
     y0 = YI[cube.y_low]
@@ -79,8 +80,9 @@ for cube in cubes:
                 if cube.on:
                     grid[(x, y, z)] = True
                 elif grid.get((x, y, z)):
-                    del grid[(x, y, z)]
-                    gc.collect()
+                    grid[(x, y, z)] = False
+                    # del grid[(x, y, z)]
+                    # gc.collect()
                 grid[(x, y, z)] = cube.on
 
 total = 0
